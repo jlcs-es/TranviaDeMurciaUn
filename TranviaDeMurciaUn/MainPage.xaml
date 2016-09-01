@@ -1,0 +1,146 @@
+﻿<Page
+    x:Class="TranviaDeMurciaUn.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TranviaDeMurciaUn.Model"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    >
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <maps:MapControl x:Name="myMap" 
+                         MapServiceToken="haoGkNyJOVaYHkCVZ2ay~DmQzGyThkx-Il2TXFUrJFQ~AlA_HkyAqfIvz51z-COdtV6Th3dW7uoHQ8g-X7t89xXwzFpLy5KyM0XM9VlaAwFZ"
+                         PedestrianFeaturesVisible="True"
+                         RotateInteractionMode="GestureAndControl"
+                         TiltInteractionMode="GestureAndControl"
+                         ZoomInteractionMode="GestureAndControl"
+                         >
+            
+            <maps:MapItemsControl ItemsSource="{x:Bind listaEstaciones, Mode=OneWay}">
+                <maps:MapItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:Parada">
+                        <Button Margin="-18,-36,0,0"
+                                Padding="0"
+                                maps:MapControl.Location="{x:Bind posicion, Mode=OneWay}"
+                                Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                                Background="Transparent" BorderThickness="0"
+                                Content="&#xEB4A;" FontSize="30"
+                                Height="36" Width="36"
+                                FontFamily="Segoe MDL2 Assets"
+                                Click="Button_Click"
+                                Tag="{x:Bind codigo_parada}">
+                        </Button>
+                    </DataTemplate>
+                </maps:MapItemsControl.ItemTemplate>
+            </maps:MapItemsControl>
+
+            <maps:MapItemsControl>
+                <TextBlock x:Name="posicion" FontFamily="Segoe MDL2 Assets" Text="&#xE1D2;" Visibility="Collapsed"/>
+            </maps:MapItemsControl>
+
+        </maps:MapControl>
+
+
+        <Button x:Name="LocationButton" FontFamily="Segoe MDL2 Assets" Content="&#xE1D2;"
+                    Height="50" Width="50" FontSize="25"  BorderThickness="0" Padding="0" Margin="0"
+                    Background="#7FFFFFFF" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" 
+                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Click="LocationButton_Click"/>
+
+        <Button Content="?" FontWeight="Black"
+                    Height="50" Width="50" FontSize="25"  BorderThickness="0" Padding="0" Margin="0"
+                    Background="#7FFFFFFF" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" 
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button.Flyout>
+                <Flyout>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" 
+                                   Text="Aplicación no oficial del Tranvía de Murcia."/>
+
+                        <TextBlock>
+                            <Run Text="Desarrollada por" />
+                            <Hyperlink NavigateUri="https://es.linkedin.com/in/joseluiscanovassanchez">José Luis Cánovas Sánchez</Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock TextWrapping="Wrap">
+                            Se matendrá muy básica en cuanto a<LineBreak/>funciones e interfaz, a espera de una<LineBreak/>aplicación oficial del Tranvía de Murcia. 
+                        </TextBlock>
+
+                        <TextBlock>
+                            <Run>Se pueden enviar peticiones a</Run>
+                            <LineBreak/>
+                            <Run>su</Run>
+                            <Hyperlink NavigateUri="mailto:informacionciudadana@tranviademurcia.es">correo electrónico</Hyperlink>
+                            <Run>.</Run>
+                        </TextBlock>
+
+                    </StackPanel>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+
+        <ProgressRing x:Name="LoadingRing" IsActive="True" Width="100" Height="100"
+                    Padding="0" Margin="0,0,10,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Visibility="Collapsed"/>
+
+
+        <FlyoutBase.AttachedFlyout>
+            <Flyout x:Name="myFlyout">
+                <Grid x:Name="myFlyoutGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,5,5,15">
+                        <TextBlock Text="{x:Bind myParada.nombre, Mode=OneWay}" FontSize="30" TextWrapping="Wrap" Typography.Capitals="AllSmallCaps"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1">
+                        <Border Margin="0,0,0,15" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
+                        <ItemsControl ItemsSource="{x:Bind myParada.tiempo_real, Mode=OneWay}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:TiempoReal">
+                                    <StackPanel>
+                                        <TextBlock Text="{x:Bind direccion, Mode=OneWay}" Typography.Capitals="AllSmallCaps" FontSize="20"/>
+                                        <TextBlock Text="{x:Bind tiempo_real_expandido, Mode=OneWay}" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Border Margin="0,15,0,0" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2">
+                        <Border Margin="0,0,0,15" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
+                        <TextBlock Text="Horarios" Typography.Capitals="AllSmallCaps" FontSize="20"/>
+                        <Border Margin="0,0,0,0" BorderThickness="0,0,0,1" BorderBrush="LightGray" Height="1"/>
+                        <ItemsControl ItemsSource="{x:Bind myParada.horarios, Mode=OneWay}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:Horario">
+                                    <StackPanel>
+                                        <TextBlock Text="{x:Bind destino, Mode=OneWay}" Typography.Capitals="AllSmallCaps" FontSize="20"/>
+                                        <TextBlock Text="{x:Bind primero_text, Mode=OneWay}" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{x:Bind primero, Mode=OneWay}" HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{x:Bind normal_text, Mode=OneWay}" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{x:Bind horario, Mode=OneWay}" HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{x:Bind ultimo_text, Mode=OneWay}" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{x:Bind ultimo, Mode=OneWay}" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Border Margin="0,15,0,0" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
+                    </StackPanel>
+
+                </Grid>
+            </Flyout>
+        </FlyoutBase.AttachedFlyout>
+
+    </Grid>
+</Page>
