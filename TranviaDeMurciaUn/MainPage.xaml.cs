@@ -99,7 +99,7 @@ namespace TranviaDeMurciaUn
             await myParada.actualizar();
             this.Bindings.Update();
             LoadingRing.Visibility = Visibility.Collapsed;
-            myFlyout.ShowAt((Button)sender);
+            myFlyout.ShowAt(myMap);
         }
     }
 }

@@ -111,18 +111,33 @@ namespace TranviaDeMurciaUn.Model
             // un array, sacar manualmente el 0 y el 1 y meterlos
             try
             {
-                JsonArray tiempo_realJA = dataJO.GetNamedArray(tiempo_realKey, new JsonArray());
-                JsonArray horariosJA = dataJO.GetNamedArray(horariosKey, new JsonArray());
-
-                // Recorrer cada array y guardar en su variable
-
-                foreach (IJsonValue jsonValue in tiempo_realJA)
+                JsonValueType vt = dataJO.GetNamedValue(tiempo_realKey).ValueType;
+                if (vt == JsonValueType.Array)
                 {
-                    if (jsonValue.ValueType == JsonValueType.Object)
+                    JsonArray tiempo_realJA = dataJO.GetNamedArray(tiempo_realKey, new JsonArray());
+                    // Recorrer cada array y guardar en su variable
+
+                    foreach (IJsonValue jsonValue in tiempo_realJA)
                     {
-                        tiempo_real.Add(new TiempoReal(jsonValue.GetObject()));
+                        if (jsonValue.ValueType == JsonValueType.Object)
+                        {
+                            tiempo_real.Add(new TiempoReal(jsonValue.GetObject()));
+                        }
                     }
+
+                    Debug.WriteLine("JsonArray Parsed");
                 }
+                else
+                {
+                    JsonObject tiempo_realJO = dataJO.GetNamedObject(tiempo_realKey);
+                    tiempo_real.Add(new TiempoReal(tiempo_realJO.GetNamedObject("0")));
+                    tiempo_real.Add(new TiempoReal(tiempo_realJO.GetNamedObject("1")));
+
+                    Debug.WriteLine("JsonObjects '0' & '1' Parsed");
+                }
+
+
+                JsonArray horariosJA = dataJO.GetNamedArray(horariosKey, new JsonArray());
 
                 foreach (IJsonValue jsonValue in horariosJA)
                 {

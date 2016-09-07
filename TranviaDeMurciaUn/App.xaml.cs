@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -69,6 +70,25 @@ namespace TranviaDeMurciaUn
             {
                 if (rootFrame.Content == null)
                 {
+
+                    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                    {
+                        var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                        statusBar.BackgroundColor = (Color)this.Resources["SystemAccentColor"];
+                        statusBar.BackgroundOpacity = 1;
+                        statusBar.ForegroundColor = Colors.White;
+                        Windows.UI.ViewManagement.StatusBarProgressIndicator indicator = Windows.UI.ViewManagement.StatusBar.GetForCurrentView().ProgressIndicator;
+
+                        // show the progress indicator and set it's value to 0.
+                        indicator.ShowAsync();
+                        indicator.ProgressValue = 0;
+
+                        // the space here is the required hack,
+                        // as it will hide all other controls to make room for the progress text,
+                        // which is invisible here because it's only a space
+                        indicator.Text = "Tranvía de Murcia Un.";
+                    }
+
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter

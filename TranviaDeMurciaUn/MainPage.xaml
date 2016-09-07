@@ -18,7 +18,7 @@
                          TiltInteractionMode="GestureAndControl"
                          ZoomInteractionMode="GestureAndControl"
                          >
-            
+
             <maps:MapItemsControl ItemsSource="{x:Bind listaEstaciones, Mode=OneWay}">
                 <maps:MapItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="local:Parada">
@@ -66,7 +66,7 @@
                         </TextBlock>
 
                         <TextBlock TextWrapping="Wrap">
-                            Se matendrá muy básica en cuanto a<LineBreak/>funciones e interfaz, a espera de una<LineBreak/>aplicación oficial del Tranvía de Murcia. 
+                            Se matendrá muy básica en cuanto a<LineBreak/>funciones e interfaz, a espera de una<LineBreak/>aplicación oficial del Tranvía de Murcia.
                         </TextBlock>
 
                         <TextBlock>
@@ -89,58 +89,58 @@
 
         <FlyoutBase.AttachedFlyout>
             <Flyout x:Name="myFlyout">
-                <Grid x:Name="myFlyoutGrid">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <ScrollViewer Width="300" MaxHeight="500" VerticalScrollBarVisibility="Hidden">
+                    <Grid x:Name="myFlyoutGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,5,5,15">
-                        <TextBlock Text="{x:Bind myParada.nombre, Mode=OneWay}" FontSize="30" TextWrapping="Wrap" Typography.Capitals="AllSmallCaps"/>
-                    </StackPanel>
+                        <TextBlock Grid.Row="0" Margin="0,5,5,15" Text="{x:Bind myParada.nombre, Mode=OneWay}" FontSize="30" TextWrapping="Wrap" Typography.Capitals="AllSmallCaps"/>
 
-                    <StackPanel Grid.Row="1">
-                        <Border Margin="0,0,0,15" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
-                        <ItemsControl ItemsSource="{x:Bind myParada.tiempo_real, Mode=OneWay}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="local:TiempoReal">
-                                    <StackPanel>
-                                        <TextBlock Text="{x:Bind direccion, Mode=OneWay}" Typography.Capitals="AllSmallCaps" FontSize="20"/>
-                                        <TextBlock Text="{x:Bind tiempo_real_expandido, Mode=OneWay}" HorizontalAlignment="Right"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <Border Margin="0,15,0,0" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
-                    </StackPanel>
+                        <StackPanel Grid.Row="1">
+                            <Border Margin="0,0,0,15" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
+                            <ItemsControl ItemsSource="{x:Bind myParada.tiempo_real, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="local:TiempoReal">
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind direccion, Mode=OneWay}" Typography.Capitals="AllSmallCaps" FontSize="20"/>
+                                            <TextBlock Text="{x:Bind tiempo_real_expandido, Mode=OneWay}" HorizontalAlignment="Right" FontWeight="Bold" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Border Margin="0,15,0,0" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
+                        </StackPanel>
 
-                    <StackPanel Grid.Row="2">
-                        <Border Margin="0,0,0,15" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
-                        <TextBlock Text="Horarios" Typography.Capitals="AllSmallCaps" FontSize="20"/>
-                        <Border Margin="0,0,0,0" BorderThickness="0,0,0,1" BorderBrush="LightGray" Height="1"/>
-                        <ItemsControl ItemsSource="{x:Bind myParada.horarios, Mode=OneWay}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="local:Horario">
-                                    <StackPanel>
-                                        <TextBlock Text="{x:Bind destino, Mode=OneWay}" Typography.Capitals="AllSmallCaps" FontSize="20"/>
-                                        <TextBlock Text="{x:Bind primero_text, Mode=OneWay}" HorizontalAlignment="Left"/>
-                                        <TextBlock Text="{x:Bind primero, Mode=OneWay}" HorizontalAlignment="Right"/>
-                                        <TextBlock Text="{x:Bind normal_text, Mode=OneWay}" HorizontalAlignment="Left"/>
-                                        <TextBlock Text="{x:Bind horario, Mode=OneWay}" HorizontalAlignment="Right"/>
-                                        <TextBlock Text="{x:Bind ultimo_text, Mode=OneWay}" HorizontalAlignment="Left"/>
-                                        <TextBlock Text="{x:Bind ultimo, Mode=OneWay}" HorizontalAlignment="Right"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <Border Margin="0,15,0,0" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
-                    </StackPanel>
-
-                </Grid>
+                        <StackPanel Grid.Row="2">
+                            <Border Margin="0,0,0,15" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
+                            <TextBlock Text="Horarios" Typography.Capitals="AllSmallCaps" FontSize="20"/>
+                            <Border Margin="0,0,0,0" BorderThickness="0,0,0,1" BorderBrush="LightGray" Height="1"/>
+                            <ItemsControl ItemsSource="{x:Bind myParada.horarios, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="local:Horario">
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind destino, Mode=OneWay}" Typography.Capitals="AllSmallCaps" FontSize="20"/>
+                                            <TextBlock Text="{x:Bind primero_text, Mode=OneWay}" HorizontalAlignment="Left"/>
+                                            <TextBlock Text="{x:Bind primero, Mode=OneWay}" HorizontalAlignment="Right"/>
+                                            <TextBlock Text="{x:Bind normal_text, Mode=OneWay}" HorizontalAlignment="Left"/>
+                                            <TextBlock Text="{x:Bind horario, Mode=OneWay}" HorizontalAlignment="Right"/>
+                                            <TextBlock Text="{x:Bind ultimo_text, Mode=OneWay}" HorizontalAlignment="Left"/>
+                                            <TextBlock Text="{x:Bind ultimo, Mode=OneWay}" HorizontalAlignment="Right"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Border Margin="0,15,0,0" BorderThickness="0,0,0,1" BorderBrush="DarkGray" Height="1"/>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
             </Flyout>
         </FlyoutBase.AttachedFlyout>
 
     </Grid>
+
 </Page>
