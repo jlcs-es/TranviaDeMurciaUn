@@ -12,7 +12,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <maps:MapControl x:Name="myMap" 
-                         MapServiceToken="haoGkNyJOVaYHkCVZ2ay~DmQzGyThkx-Il2TXFUrJFQ~AlA_HkyAqfIvz51z-COdtV6Th3dW7uoHQ8g-X7t89xXwzFpLy5KyM0XM9VlaAwFZ"
+                         MapServiceToken="TODO"
                          PedestrianFeaturesVisible="True"
                          RotateInteractionMode="GestureAndControl"
                          TiltInteractionMode="GestureAndControl"
